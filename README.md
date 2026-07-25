@@ -1,161 +1,249 @@
-# Health Monitoring Hub (HMH)
+# 🩺 Health Monitoring Hub (HMH)
 
-Health Monitoring Hub (HMH) is a web‑based system that turns CBC lab reports into
-clear, patient‑friendly insights. It can:
+![Frontend](https://img.shields.io/badge/Frontend-React-blue)
+![Backend](https://img.shields.io/badge/Backend-Node.js-green)
+![Database](https://img.shields.io/badge/Database-PostgreSQL-blueviolet)
+![OCR](https://img.shields.io/badge/OCR-PaddleOCR-red)
+![ML](https://img.shields.io/badge/ML-Random%20Forest-orange)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
-- extract values from uploaded CBC reports (image/PDF) using OCR or manual entry
-- compare values against reference ranges and flag abnormalities
-- provide a basic severity assessment (normal / mild / critical)
-- show detailed explanations per parameter
-- generate lifestyle, diet and medicine (informational) suggestions
-- store reports in PostgreSQL and visualize health trends over time
+Health Monitoring Hub (HMH) is a full-stack AI-powered web application developed as a Final Year Project to simplify Complete Blood Count (CBC) report analysis. The system extracts values from uploaded CBC reports using OCR, predicts possible hematological disorders using machine learning, provides AI-generated health recommendations, and helps users track health trends over time.
 
-> **Clinical Disclaimer:** All outputs are for educational/awareness purposes only and
-> **not** a substitute for professional medical advice, diagnosis, or treatment.
+## Live Demo
 
----
+A deployed version of Health Monitoring Hub is available here:
 
-## Features (Sprint‑1 Working Build)
+https://health-monitoring-hub-navy.vercel.app/
 
-- **Report Upload & OCR**
-  - Upload CBC report as image/PDF (JPG, PNG, PDF)
-  - Python PaddleOCR + custom parsers extract CBC text and convert to structured JSON
-  - Fallback manual entry form if OCR fails
-
-- **Abnormality Detection & Severity**
-  - Reference ranges for key CBC parameters (Hb, WBC, RBC, Platelets, Hct, MCV, MCH, MCHC, RDW)
-  - Classifies each value as normal / mild / abnormal / critical
-  - Overall severity badge + counts (normal / abnormal / critical)
-
-- **AI‑Assisted Results Page**
-  - Rich, themed **Analysis Results** view with parameter cards
-  - Natural‑language explanation per parameter
-  - AI‑style recommendations card (diet, lifestyle, medicines – informational only)
-  - Uses backend `openAIService` when `OPENAI_API_KEY` is configured, otherwise
-    falls back to rule‑based suggestions mapped from detected conditions
-
-- **Storage & History**
-  - All reports stored in PostgreSQL `reports` table with `extracted_data` (JSONB) and `created_at`
-  - Placeholder History/Trends components and routes in the frontend (graphs planned next)
-
-- **User Experience**
-  - Modern React/Tailwind UI for upload, results, and navigation
-  - Logout confirmation modal instead of browser `confirm()`
+> **Disclaimer:** This project is intended for educational and awareness purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment.
 
 ---
 
-## Tech Stack
+## Project Highlights
 
-- **Frontend**
-  - React + Vite
-  - Tailwind/CSS + custom components
+- Upload CBC reports as JPG or PNG images.
+- Extract CBC values automatically using OCR.
+- Enter CBC values manually if OCR is unavailable.
+- Detect abnormal blood parameters using reference ranges.
+- Predict possible hematological disorders using a trained Random Forest model.
+- Generate lifestyle and diet recommendations.
+- Store report history in PostgreSQL.
+- Visualize health trends over time.
+- Provide a clean and modern user interface.
 
-- **Backend (API)**
-  - Node.js, Express
-  - PostgreSQL (via `pg`)
+---
 
-- **OCR & Parsing**
-  - Python, PaddleOCR
-  - Custom parsers for lab‑specific and universal formats
+## Overview
 
-- **AI & ML**
-  - OpenAI Chat Completions API (diet/lifestyle/medicine suggestions)
-  - Rule‑based CBC analysis + mock ML block (real ML model planned)
+Health Monitoring Hub combines OCR, machine learning, and generative AI to make CBC report interpretation easier for users.
+
+The workflow is:
+
+1. User uploads a CBC report.
+2. OCR extracts text from the report.
+3. CBC values are parsed into structured form.
+4. Values are checked against reference ranges.
+5. A Random Forest model predicts possible disorders.
+6. AI-generated explanations and recommendations are shown.
+7. Reports are stored for history and trend analysis.
+
+---
+
+## Features
+
+### Report Upload & OCR
+
+- Upload CBC reports as JPG or PNG images.
+- Use PaddleOCR to extract report text automatically.
+- Fall back to manual entry when OCR extraction is not enough.
+
+### Abnormality Detection
+
+- Compare CBC parameters against reference ranges.
+- Flag normal, low, high, and critical values.
+- Show an overall severity summary.
+
+### ML Prediction
+
+- Predict possible hematological conditions using a trained Random Forest model.
+- Show prediction output in a clear and patient-friendly format.
+
+### AI Recommendations
+
+- Generate dietary and lifestyle suggestions.
+- Provide readable explanations for CBC abnormalities.
+- Show informational medicine suggestions where applicable.
+
+### History & Trends
+
+- Store reports in PostgreSQL.
+- Display previous CBC reports.
+- Visualize trends over time using charts.
+
+### User Experience
+
+- Clean React UI.
+- Responsive layout.
+- Secure login and logout flow.
+
+---
+
+## Technology Stack
+
+### Frontend
+- React.js
+- Vite
+- Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- PostgreSQL
+
+### OCR & AI
+- Python
+- PaddleOCR
+- Scikit-learn
+- Random Forest Classifier
+- Mistral Small Latest
+
+### Other
+- JWT Authentication
+- Recharts
+- Git & GitHub
+
+---
+
+## My Contribution
+
+My primary role in this project was the AI/ML pipeline.
+
+I worked on:
+
+- OCR text extraction using PaddleOCR
+- CBC parsing and preprocessing
+- Random Forest model training for hematological disorder prediction
+- Integration of the trained model with the backend
+- Integration of Mistral-based recommendations
+- Python AI services
+
+---
+
+## Machine Learning Model
+
+The disease prediction module uses a supervised Random Forest classifier trained on CBC-related features.
+
+### Input Features
+- RBC
+- WBC
+- Hemoglobin (Hb)
+- Hematocrit (HCT)
+- Platelets
+- MCV
+- MCH
+- MCHC
+- RDW
+
+---
+
+## OCR Pipeline
+
+1. User uploads a CBC report.
+2. PaddleOCR extracts text from the image.
+3. Custom parsing logic identifies CBC parameters.
+4. Structured values are passed to the analysis module.
+5. Results are displayed on the analysis page.
+
+---
+
+## System Architecture
+
+```text
+User
+  ↓
+React Frontend
+  ↓
+Node.js / Express API
+  ↓
+Python OCR Service (PaddleOCR)
+  ↓
+CBC Parsing + Preprocessing
+  ↓
+Random Forest Prediction
+  ↓
+Mistral Recommendations
+  ↓
+PostgreSQL Storage
+```
 
 ---
 
 ## Repository Structure
 
 ```text
-HMH-Project/
-├── backend/               # Node/Express API + DB initializer
-│   ├── routes/            # upload, reports, analyze, history, etc.
-│   ├── services/          # OCR, rule detection, OpenAI, reference ranges
-│   ├── ocr-code/          # PaddleOCR + parsers (Python)
-│   ├── ocr-service/       # Python API wrapper around OCR (optional)
-│   ├── server.js          # Express server entry
+health-monitoring-hub/
+│
+├── backend/
+│   ├── routes/
+│   ├── services/
+│   ├── ocr-code/
+│   ├── ocr-service/
+│   ├── server.js
 │   └── package.json
-├── frontend/              # React + Vite client
-│   ├── src/components/    # UploadReport, ResultsDisplay, Dashboard, History, etc.
-│   ├── src/App.js
+│
+├── frontend/
+│   ├── src/
+│   ├── components/
+│   ├── pages/
 │   └── package.json
-├── README.md              # Project summary and setup
-└── ...                    # Docs, scripts, etc.
+│
+├── screenshots/
+│   ├── home.jpeg
+│   ├── upload.jpeg
+│   ├── analysis.png
+│   ├── recommendations.png
+│   └── trends.png
+│
+└── README.md
 ```
 
 ---
 
-## Setup & Running (Local)
+## Screenshots
 
-### 1. Clone the Repository
+### Home Page
+![Home](screenshots/home.jpeg)
 
-```bash
-git clone https://github.com/Hafsa-akhtar07/health-monitoring-hub.git
-cd health-monitoring-hub
-```
+### Upload / Manual Entry
+![Upload](screenshots/upload.jpeg)
 
-### 2. Backend API (Node + PostgreSQL)
+### CBC Analysis
+![Analysis](screenshots/analysis.png)
 
-#### Prerequisites
-- Node.js (v18+ recommended)
-- PostgreSQL (running locally)
+### AI Recommendations
+![Recommendations](screenshots/recommendations.png)
 
-#### Install dependencies
-```bash
-cd backend
-npm install
-```
-
-#### Configure environment
-Create `backend/.env` (or copy from `.env.example` if present):
-
-```env
-PORT=5000
-DATABASE_URL=postgres://user:password@localhost:5432/health_monitoring_hub
-
-# Optional: ML service URL
-ML_SERVICE_URL=http://localhost:5001
-
-
-#### Initialize DB & run server
-On first start, the backend will create `users`, `reports`, and `analyses` tables.
-
-```bash
-cd backend
-npm start          # or: npm run dev
-```
-
-Backend runs at `http://localhost:5000`.
+### Health Trends
+![Trends](screenshots/trends.png)
 
 ---
 
-### 3. OCR Service (Python + PaddleOCR)
+## How It Works
 
-> You can either run OCR via `backend/ocr-code` directly or use the small `ocr-service`
-> wrapper. The Node backend expects an OCR HTTP service when configured.
-
-#### Option A – Direct OCR script (batch, for testing)
-```bash
-cd backend/ocr-code
-pip install -r requirements.txt
-python ocr_processor.py      # Processes images in ocr-code/images/
-```
-
-#### Option B – OCR HTTP service (recommended)
-If using the separate OCR API (e.g., `backend/ocr-service`):
-
-```bash
-cd backend/ocr-service
-pip install -r requirements.txt
-python app.py        # or python ocr-service.py depending on your setup
-```
-
-Configure the OCR service URL in `backend/routes/upload.js` (via `OCR_SERVICE_URL`
-env if needed).
+1. Log in to the application.
+2. Upload a CBC report or enter values manually.
+3. View extracted CBC values and abnormal findings.
+4. See the machine learning-based prediction.
+5. Read AI-generated recommendations.
+6. Review previous reports and health trends.
 
 ---
 
-### 4. Frontend (React + Vite)
+## Setup
+
+### Frontend
 
 ```bash
 cd frontend
@@ -163,46 +251,53 @@ npm install
 npm run dev
 ```
 
-Open the app at the URL printed by Vite (`http://localhost:3000`).
+### Backend
 
-Make sure the backend (`http://localhost:5000`) and OCR service are running first.
+```bash
+cd backend
+npm install
+npm start
+```
 
----
+### OCR Service
 
-## CI/CD & Branching (Planned)
+```bash
+cd backend/ocr-service
+pip install -r requirements.txt
+python app.py
+```
 
-- Branches
-  - `main` – release‑ready, protected
-  - `develop` – integration branch
-  - `feature/<name>` – feature work (e.g., `feature/ocr-parser`)
+### Database
 
-- Planned GitHub Actions pipeline (from D1/D2):
-  - Trigger on push/PR to `develop` and `main`
-  - Steps:
-    - Checkout repo
-    - Install backend & frontend dependencies
-    - Run lint/tests (to be added)
-    - Build frontend bundle
-    - (Later) deploy to staging/production
+Make sure PostgreSQL is running and the connection details are configured in the backend environment file.
 
-Currently, tests and builds are run manually; CI implementation is scheduled for
-next sprints.
+Example:
 
----
-
-## Known Issues / TODOs
-
-- PaddleOCR accuracy can vary across lab formats; additional parser tuning needed.
-- ML severity block is currently rule‑based + mock; real trained model and service
-  integration are pending.
-- History & Trends graphs are partially implemented (data stored, visualization WIP).
-- OpenAI suggestions may fall back to rule‑based mock if API key is missing or
-  the request fails.
+```env
+DATABASE_URL=postgres://username:password@localhost:5432/health_monitoring_hub
+```
 
 ---
 
-## License / Usage
+## Future Improvements
 
-This project is developed as an academic Final Year Design Project (FYDP) at
-FCIT, University of the Punjab. Clinical use requires validation and approval by
-qualified healthcare professionals and relevant authorities.
+- Support more CBC report formats.
+- Improve OCR accuracy for different lab layouts.
+- Expand the machine learning model with larger datasets.
+- Add doctor and hospital dashboards.
+- Improve trend analytics and reporting.
+- Add PDF export for analysis reports.
+
+---
+
+## Academic Information
+
+Developed as a Final Year Project for the Bachelor of Software Engineering program at the University of the Punjab.
+
+---
+
+## Author
+
+**Hooria Laiba**  
+Software Engineering Graduate  
+University of the Punjab (PUCIT)

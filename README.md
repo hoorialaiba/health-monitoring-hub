@@ -6,6 +6,7 @@
 ![OCR](https://img.shields.io/badge/OCR-PaddleOCR-red)
 ![ML](https://img.shields.io/badge/ML-Random%20Forest-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=flat-square)](https://health-monitoring-hub-navy.vercel.app/)
 
 Health Monitoring Hub (HMH) is a full-stack AI-powered web application developed as a Final Year Project to simplify Complete Blood Count (CBC) report analysis. The system extracts values from uploaded CBC reports using OCR, predicts possible hematological disorders using machine learning, provides AI-generated health recommendations, and helps users track health trends over time.
 
@@ -278,7 +279,19 @@ DATABASE_URL=postgres://username:password@localhost:5432/health_monitoring_hub
 ```
 
 ---
+## 🌐 Live Demo
 
+🚀 Try the application here:
+
+**https://health-monitoring-hub-navy.vercel.app/**
+
+or simply click:
+
+👉 **[Health Monitoring Hub Live Demo](https://health-monitoring-hub-navy.vercel.app/)**
+
+> The deployed application allows you to explore the user interface and core workflow of the project.
+
+---
 ## Future Improvements
 
 - Support more CBC report formats.
